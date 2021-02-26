@@ -1,0 +1,84 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: ak
+ * @Date: 2021-02-26 16:03:00
+ * @LastEditors: ak
+ * @LastEditTime: 2021-02-26 16:59:20
+-->
+
+<template>
+    <div class="tag-group">
+        <span class="tag-group__title">日活</span>
+        <el-tag type="" effect="plain">
+            {{ items.oneDayNumber }}
+        </el-tag>
+    </div>
+    <div class="tag-group">
+        <span class="tag-group__title">月活</span>
+        <el-tag type="" effect="plain">
+            {{ items.MonthNumber }}
+        </el-tag>
+    </div>
+    <div class="tag-group">
+        <span class="tag-group__title">日留存</span>
+        <el-tag type="" effect="plain">
+            {{ items.oneDayRemainingNumber }}
+        </el-tag>
+    </div>
+    <div class="tag-group">
+        <span class="tag-group__title">7日留存</span>
+        <el-tag type="" effect="plain">
+            {{ items.days7RemainingNumber }}
+        </el-tag>
+    </div>
+    <div class="tag-group">
+        <span class="tag-group__title">新增</span>
+        <el-tag type="" effect="plain">
+            66
+        </el-tag>
+    </div>
+</template>
+
+<script>
+    export default {
+        name: 'CoreIndicator',
+        props: {
+            items: {
+                type: Object,
+                default: {}
+            },
+        },
+        data() {
+            return {
+                
+            }
+        }
+
+    }
+</script>
+
+<style scoped>
+    .tag-group{
+        display: flex;
+        height: 60px;
+        line-height: 60px;
+        justify-content: start;
+        margin-bottom: 10px;
+    }
+
+    .el-tag {
+        display: inline-block;
+        width: 80px;
+        font-size: 36px;
+        height: 60px;
+        line-height: 60px;
+        background: none;
+    }
+
+    .tag-group__title{
+        display: inline-block;
+        width: 60px;
+        margin-right: 5px;
+    }
+</style>

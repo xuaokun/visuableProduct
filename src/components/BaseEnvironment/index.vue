@@ -4,7 +4,7 @@
  * @Author: ak
  * @Date: 2021-02-23 13:39:18
  * @LastEditors: ak
- * @LastEditTime: 2021-02-25 16:32:33
+ * @LastEditTime: 2021-02-26 16:35:30
 -->
 
 <template>
@@ -56,30 +56,30 @@
   }
 </script>
 
-<style>
+<style scoped lang="scss">
   .el-table{
     font-size: 12px;
     background-color: #000;
     color: rgb(7, 94, 138);
   }
-  .el-table .cell{
+  .el-table ::v-deep(.cell){
     height: 20px;
   }
 
-  .el-table td, .el-table th{
+  .el-table ::v-deep(td),.el-table ::v-deep(.el-table th){
     padding: 2px 0;
   }
   
-  .el-table .warning-row {
+  .el-table ::v-deep(.warning-row) {
     background:  #eeaeb3;
     opacity: 0.8;
   }
 
-  .el-table .success-row {
+  .el-table ::v-deep(.success-row ){
     background: #8ac28a;
   }
 
-  .el-table th{
+  .el-table ::v-deep(th){
     color: gold;
     text-align: center;
     background-color: #000;
@@ -90,5 +90,9 @@
     position: absolute;
     background-color: #000;
     z-index: 1;
+  }
+
+  .el-table ::v-deep(td),.el-table ::v-deep(th){
+    border-bottom: 2px solid #000;
 }
 </style>

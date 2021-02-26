@@ -4,31 +4,33 @@
  * @Author: ak
  * @Date: 2021-02-23 10:37:50
  * @LastEditors: ak
- * @LastEditTime: 2021-02-25 15:46:29
+ * @LastEditTime: 2021-02-26 17:16:05
 -->
 
 <template>
     <div class="main-container">
         <el-row type="flex" class="row-bg page-top">
-            <el-col :span="6">
+            <el-col :span="3">
                 <div class="grid-content coreIndicator">
-    
+                    <CoreIndicator :items="userData[userData.length - 1]"/>
                 </div>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="15">
                 <div class="grid-content statistic">
-    
+                    <Charts :puvData="puvData" :userData="userData" :processStatistic="processStatistic" :scenesShowData="scenesShowData"/>
                 </div>
             </el-col>
             <el-col :span="6">
                 <div class="grid-content info-import">
-    
+                    warn
                 </div>
             </el-col>
         </el-row>
-        <el-row class="divider">
-            <el-divider content-position="left">基础环境</el-divider>
-        </el-row>
+        <div class="my-divider">
+            <el-row class="divider">
+                <el-divider content-position="left"><i class="el-icon-loading"></i>基础环境</el-divider>
+            </el-row>
+        </div>
         <el-row type="flex" class="row-bg page-bottom">
             <el-col :span="2" v-for="(item, index) in statusDict.processStatus" :key="item.name">
                 <div class="grid-content">
@@ -51,63 +53,118 @@
 
 <script>
     import BaseEnvironment from '@/components/BaseEnvironment';
+    import CoreIndicator from '@/components/CoreIndicator';
+    import Charts from '@/components/Charts';
     export default {
         name: 'SystemStatus',
-        data(){
-            return{
+        data() {
+            return {
                 statusDict: {
                     processStatus: [],
                     sceneStatus: [],
-                    serverStatus: []
-                }
+                    serverStatus: [],
+                },
+                puvData: [],
+                userData: [],
+                processStatistic: [],
+                scenesShowData: [],
             }
         },
         components: {
-            BaseEnvironment
+            BaseEnvironment,
+            CoreIndicator,
+            Charts
         },
         mounted() {
-            this.axios.get('/api/systemStatus').then(res => {
-                let msg = res.data.msg;
-                if(msg == 'ok'){
-                    console.log(res.data.data);
-                    let data = res.data.data;
-                    for(let key in data){//遍历一种状态
-                        let list = [];
-                        for(let item of data[key]){//遍历每一条记录
-                            if(list.length == 4){
-                                this.statusDict[key].push(list);
-                                list = [];
-                            }
-                            list.push(item);
-                        }
-                        if(list.length > 0){
-                            this.statusDict[key].push(list);
-                        }
-                    }
-                    console.log(this.statusDict)
-                }
-            })
+            this.getData();
+            this.timer = setInterval(this.getData, 1000);
+            this.getPUV();
+            this.getChartsData();
         },
+        methods: {
+            //axios异步请求
+            getData:function () {
+                let that = this;
+                that.axios.get('/api/systemStatus').then(res => {
+                    let msg = res.data.msg;
+                    if (msg == 'ok') {
+                        // console.log(res.data.data);
+                        let statusDict = {
+                            processStatus: [],
+                            sceneStatus: [],
+                            serverStatus: []
+                        };
+                        let data = res.data.data;
+                        for (let key in data) {//遍历一种状态
+                            let list = [];
+                            for (let item of data[key]) {//遍历每一条记录
+                                if (list.length == 4) {
+                                    statusDict[key].push(list);
+                                    list = [];
+                                }
+                                list.push(item);
+                            }
+                            if (list.length > 0) {
+                                statusDict[key].push(list);
+                            }
+                        }
+                        console.log(statusDict)
+                        that.statusDict = statusDict;
+                    }
+                })
+            },
+
+            //axios异步请求获取PV、UV
+            getPUV:function () {
+                let that = this;
+                that.axios.get('/api/getReportData').then(res => {
+                    let msg = res.data.msg;
+                    if (msg == 'ok') {
+                        that.puvData = res.data.data;
+                        console.log(that.puvData)
+                    }
+                })
+            },
+
+            //axios异步请求获取其他图表趋势数据
+            getChartsData:function () {
+                let that = this;
+                that.axios.get('/api/getChartsData').then(res => {
+                    let msg = res.data.msg;
+                    if (msg == 'ok') {
+                        that.userData =  res.data.data.userData;
+                        that.processStatistic = res.data.data.processStatistic;
+                        that.scenesShowData = res.data.data.scenesShowData;
+                        console.log(res.data.data)
+                    }
+                })
+            }
+        },
+        beforeUnmount() {
+            clearInterval(this.timer);
+        }
     }
 </script>
 
-<style scoped lang="scss">
-    .main-container{
+<style lang="scss" scoped>
+    .main-container {
         height: 100%;
     }
-    
+
     .el-row {
         margin-bottom: 20px;
+
         &:last-child {
             margin-bottom: 0;
         }
     }
-    .divider{
-        margin-bottom: 0;
+
+    ::v-deep(.el-divider__text){
+        background-color: #000;
+        font-size: 20px;
+        color: #eee
     }
-    .el-divider__text{
-        background-color: #f9fafc;
-    }
+
     .el-col {
         border-radius: 4px;
     }
@@ -122,27 +179,21 @@
         padding: 10px 0;
         /* background-color: #f9fafc; */
     }
-
-    .el-el-divider{
-        height: auto;
-    }
-
-    .coreIndicator{
-        background-color: bisque;
-    }
-
-    .statistic{
-        background-color: blueviolet;
-    }
     
-    .info-import{
+    .coreIndicator {
+
+    }
+
+    .statistic {
+        
+    }
+
+    .info-import {
         background-color: burlywood;
     }
 
-    .page-bottom{
-        /* height: 200px; */
+    .el-row ::v-deep(.page-top) {
+        height: 40%;
     }
-    .el-scrollbar__view{
-        height: 100%;
-    }
+
 </style>

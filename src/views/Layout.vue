@@ -4,12 +4,12 @@
  * @Author: ak
  * @Date: 2021-02-18 15:55:25
  * @LastEditors: ak
- * @LastEditTime: 2021-02-25 16:15:01
+ * @LastEditTime: 2021-02-26 17:42:26
 -->
 <template>
     <div class="home-box">
         <el-container>
-            <el-header><Header></Header></el-header>
+            <!-- <el-header><Header></Header></el-header> -->
             <!-- <el-container> -->
                 <!-- <el-aside style="width: 201px;"><AsideMenu></AsideMenu></el-aside> -->
                 <el-main>
@@ -43,7 +43,7 @@
         height: 100%;
         /* background-color: #f9fafc; */
         background-image: url('../assets/background.png');
-        color: #0099cc;
+        color: rgb(7, 94, 138);
     }
     .el-header{
         padding: 0;
