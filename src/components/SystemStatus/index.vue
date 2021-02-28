@@ -158,11 +158,15 @@
             margin-bottom: 0;
         }
     }
+    
+    .el-divider{
+        background-color: rgb(7, 94, 138);
+    }
 
     ::v-deep(.el-divider__text){
         background-color: #000;
         font-size: 20px;
-        color: #eee
+        color: rgb(7, 94, 138);
     }
 
     .el-col {
