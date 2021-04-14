@@ -4,7 +4,7 @@
  * @Author: ak
  * @Date: 2021-02-23 10:37:50
  * @LastEditors: ak
- * @LastEditTime: 2021-02-26 17:16:05
+ * @LastEditTime: 2021-03-02 13:59:19
 -->
 
 <template>
@@ -15,16 +15,16 @@
                     <CoreIndicator :items="userData[userData.length - 1]"/>
                 </div>
             </el-col>
-            <el-col :span="15">
+            <el-col :span="21">
                 <div class="grid-content statistic">
                     <Charts :puvData="puvData" :userData="userData" :processStatistic="processStatistic" :scenesShowData="scenesShowData"/>
                 </div>
             </el-col>
-            <el-col :span="6">
+            <!-- <el-col :span="6">
                 <div class="grid-content info-import">
                     warn
                 </div>
-            </el-col>
+            </el-col> -->
         </el-row>
         <div class="my-divider">
             <el-row class="divider">
@@ -108,7 +108,7 @@
                                 statusDict[key].push(list);
                             }
                         }
-                        console.log(statusDict)
+                        // console.log(statusDict)
                         that.statusDict = statusDict;
                     }
                 })
@@ -121,7 +121,7 @@
                     let msg = res.data.msg;
                     if (msg == 'ok') {
                         that.puvData = res.data.data;
-                        console.log(that.puvData)
+                        // console.log(that.puvData)
                     }
                 })
             },
@@ -135,7 +135,7 @@
                         that.userData =  res.data.data.userData;
                         that.processStatistic = res.data.data.processStatistic;
                         that.scenesShowData = res.data.data.scenesShowData;
-                        console.log(res.data.data)
+                        // console.log(res.data.data)
                     }
                 })
             }

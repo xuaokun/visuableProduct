@@ -4,7 +4,7 @@
  * @Author: ak
  * @Date: 2021-02-26 17:03:15
  * @LastEditors: ak
- * @LastEditTime: 2021-03-01 13:42:10
+ * @LastEditTime: 2021-03-02 18:01:07
 -->
 <template>
     <div class="chartsBox">
@@ -270,7 +270,7 @@
                     puvData.shareUV.push(item.shareUV);
                     puvData.createdTime.push(item.createdTime);
                 }
-                console.log(puvData)
+                // console.log(puvData)
                 let option = {
                     // title: {
                     //     text: '折线图堆叠'
@@ -379,13 +379,14 @@
                     tooltip: {
                         trigger: "axis",
                     },
-                    // legend: {
-                    //     textStyle: {
-                    //         color: "rgb(7, 94, 138)",
-                    //     },
-                    //     icon: "triangle",
-                    //     data: nameList,
-                    // },
+                    legend: {
+                        textStyle: {
+                            color: "rgb(7, 94, 138)",
+                            fontSize: 6
+                        },
+                        icon: "triangle",
+                        data: nameList,
+                    },
                     grid: {
                         left: "3%",
                         right: "4%",
@@ -415,10 +416,10 @@
                     },
                     series: [],
                 };
-                console.log(sceneData)
+                // console.log(sceneData)
                 for(let key in sceneData){
                     if(key != 'undefined'){
-                        console.log(key)
+                        // console.log(key)
                         option.series.push(
                             {
                                 name: key,
@@ -429,7 +430,7 @@
                         )
                     }
                 }
-                console.log(option);
+                // console.log(option);
                 this.myChart4.setOption(option);
             }
 

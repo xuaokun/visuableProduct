@@ -4,7 +4,7 @@
  * @Author: ak
  * @Date: 2021-02-26 16:03:00
  * @LastEditors: ak
- * @LastEditTime: 2021-02-26 16:59:20
+ * @LastEditTime: 2021-03-01 14:20:57
 -->
 
 <template>
@@ -35,7 +35,7 @@
   <div class="tag-group">
     <span class="tag-group__title">新增</span>
     <el-tag type="" effect="plain">
-      {{ items.newNum }}
+      {{ items.newNum ? items.newNum : '-'}}
     </el-tag>
   </div>
 </template>
